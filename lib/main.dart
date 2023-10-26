@@ -1,125 +1,129 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(VolunteerEventApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class VolunteerEventApp extends StatelessWidget {
+  const VolunteerEventApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 111, 0)),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'United Way SEMO'),
+      home: EventListPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class EventListPage extends StatelessWidget {
+  final List<Event> events = getEventList(); // Replace with your event data
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Volunteer Events"),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EventDetailsPage(event: events[index]),
+                ),
+              );
+            },
+            child: Card(
+              child: Column(
+                children: <Widget>[
+                  Image.network(events[index].coverImage),
+                  Text(events[index].title),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+class EventDetailsPage extends StatelessWidget {
+  final Event event;
+
+  EventDetailsPage({required this.event});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(event.title),
+      ),
+      body: Column(
+        children: <Widget>[
+          Image.network(event.coverImage),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              event.description,
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ),
+          // You can add more event details here
+        ],
+      ),
+    );
+  }
+}
+
+class Event {
+  final String title;
+  final String coverImage;
+  final String description; // Add a description field
+
+  Event({required this.title, required this.coverImage, required this.description});
+}
+
+List<Event> getEventList() {
+  return [
+    Event(
+      title: "Trash Pickup",
+      coverImage: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fiseusa.org%2Fthe-importance-of-volunteering%2F&psig=AOvVaw3ELgRJn-xkLXWwkUARSMLP&ust=1698417934956000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCPDT0fz5k4IDFQAAAAAdAAAAABAE",
+      description: '''
+      Date: November 10, 2023\n
+      Time: 9:00 AM - 12:00 PM\n
+      Activity: Trash Pickup Volunteer Event\n
+      \n
+      Join us on November 10, 2023, from 9:00 AM to 12:00 PM for a community-wide Trash Pickup Volunteer Event. 
+      This is an opportunity for us to come together and make our neighborhood cleaner and more beautiful. We will meet at [Location], 
+      where we'll provide gloves, bags, and other necessary equipment. 
+      Please wear comfortable clothing and closed-toe shoes.\n
+      \n
+      Let's work together to make a positive impact on our environment and create a cleaner, healthier community. 
+      Your participation is greatly appreciated, and together, we can make a difference!"
+    '''
+    ),
+    Event(
+      title: "Tree Planting",
+      coverImage: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fstudents.1fbusa.com%2Fpay-it-forward%2F25-ways-to-volunteer-in-your-community&psig=AOvVaw3ELgRJn-xkLXWwkUARSMLP&ust=1698417934956000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCPDT0fz5k4IDFQAAAAAdAAAAABAJ",
+      description: '''
+      Date: April 22, 2023\n
+      Time: 10:00 AM - 1:00 PM\n
+      Activity: Tree Planting Volunteer Event\n
+      \n 
+      On April 22, 2023, from 10:00 AM to 1:00 PM, we invite you to join us for a Tree Planting Volunteer Event. 
+      This event is part of our efforts to promote a greener and more sustainable community. We will meet at [Location], 
+      where you'll be provided with the necessary tools and saplings. Please come dressed in comfortable outdoor clothing 
+      and bring a water bottle to stay hydrated.\n
+\n
+      Let's work together to enhance our local environment, improve air quality, and beautify our neighborhood. 
+      Your participation is crucial in creating a more sustainable and green future for our community. 
+      We look forward to planting trees with you on this special day!
+      '''
+    ),
+    // Add more events here
+  ];
+}
+
