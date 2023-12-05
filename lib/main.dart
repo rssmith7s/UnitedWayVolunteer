@@ -35,6 +35,7 @@ class VolunteerOpportunity {
   String location;
   String description;
   OpportunityStatus status;
+  List<Volunteer> volunteers; // New property to hold a list of volunteers
 
   VolunteerOpportunity({
     required this.organization,
@@ -43,6 +44,21 @@ class VolunteerOpportunity {
     required this.location,
     required this.description,
     required this.status,
+    List<Volunteer>? volunteers, // Provide a default empty list
+  }) : volunteers = volunteers ?? [];
+}
+
+class Volunteer {
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String email;
+
+  Volunteer({
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.email,
   });
 }
 
@@ -393,6 +409,13 @@ class _AdminPageState extends State<AdminPage> {
     );
   }
 
+  void _viewVolunteerList() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VolunteerListPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
@@ -412,6 +435,11 @@ class _AdminPageState extends State<AdminPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ElevatedButton(
+              onPressed: _viewVolunteerList,
+              child: Text('View All Volunteers'),
+            ),
+            SizedBox(height: 16),
             Text(
               'Pending Opportunities:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -446,12 +474,34 @@ class _AdminPageState extends State<AdminPage> {
                 },
               ),
             ),
+            SizedBox(height: 16),
+            Text(
+              'Approved Opportunities:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: opportunities.length,
+                itemBuilder: (context, index) {
+                  if (opportunities[index].status == OpportunityStatus.accepted) {
+                    return ListTile(
+                      title: Text(opportunities[index].organization),
+                      subtitle: Text('Date: ${opportunities[index].date}'),
+                      onTap: () => _viewVolunteerList(),
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 
 class VolunteerPage extends StatefulWidget {
   @override
@@ -521,10 +571,72 @@ class _VolunteerPageState extends State<VolunteerPage> {
   }
 }
 
-class EventDetailsPage extends StatelessWidget {
+class EventDetailsPage extends StatefulWidget {
   final VolunteerOpportunity opportunity;
 
   EventDetailsPage({required this.opportunity});
+
+  @override
+  _EventDetailsPageState createState() => _EventDetailsPageState();
+}
+
+class _EventDetailsPageState extends State<EventDetailsPage> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  void _submitVolunteerInfo() {
+  String firstName = firstNameController.text.trim();
+  String lastName = lastNameController.text.trim();
+  String phoneNumber = phoneNumberController.text.trim();
+  String email = emailController.text.trim();
+
+  if (firstName.isNotEmpty &&
+      lastName.isNotEmpty &&
+      phoneNumber.isNotEmpty &&
+      email.isNotEmpty) {
+    // Create a new Volunteer object
+    Volunteer newVolunteer = Volunteer(
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      email: email,
+    );
+
+    // Add the new volunteer to the opportunity's list of volunteers
+    widget.opportunity.volunteers.add(newVolunteer);
+
+    // You can implement logic to send this information to the administrator and partner
+    // For simplicity, let's just print the information for now
+    print('Volunteer Information Submitted:');
+    print('Name: $firstName $lastName');
+    print('Phone Number: $phoneNumber');
+    print('Email: $email');
+
+    // Clear the form fields
+    firstNameController.clear();
+    lastNameController.clear();
+    phoneNumberController.clear();
+    emailController.clear();
+  } else {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text('Please fill in all fields.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -537,14 +649,84 @@ class EventDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Organization: ${opportunity.organization}'),
-            Text('Date: ${opportunity.date}'),
-            Text('Time: ${opportunity.time}'),
-            Text('Location: ${opportunity.location}'),
-            Text('Description: ${opportunity.description}'),
+            Text('Organization: ${widget.opportunity.organization}'),
+            Text('Date: ${widget.opportunity.date}'),
+            Text('Time: ${widget.opportunity.time}'),
+            Text('Location: ${widget.opportunity.location}'),
+            Text('Description: ${widget.opportunity.description}'),
+            SizedBox(height: 20),
+            Text('Volunteer Information Form:'),
+            TextField(
+              controller: firstNameController,
+              decoration: InputDecoration(labelText: 'First Name'),
+            ),
+            TextField(
+              controller: lastNameController,
+              decoration: InputDecoration(labelText: 'Last Name'),
+            ),
+            TextField(
+              controller: phoneNumberController,
+              decoration: InputDecoration(labelText: 'Phone Number'),
+            ),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitVolunteerInfo,
+              child: Text('Submit Volunteer Information'),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+class VolunteerListPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
+
+    // Extract all volunteers from all opportunities
+    var allVolunteers = opportunities.expand((opportunity) => opportunity.volunteers).toList();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('All Volunteers'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Volunteers:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: allVolunteers.length,
+                itemBuilder: (context, index) {
+                  var volunteer = allVolunteers[index];
+                  return ListTile(
+                    title: Text('${volunteer.firstName} ${volunteer.lastName}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Phone: ${volunteer.phoneNumber}'),
+                        Text('Email: ${volunteer.email}'),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
