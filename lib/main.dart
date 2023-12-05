@@ -453,15 +453,97 @@ class _AdminPageState extends State<AdminPage> {
   }
 }
 
-class VolunteerPage extends StatelessWidget {
+class VolunteerPage extends StatefulWidget {
+  @override
+  _VolunteerPageState createState() => _VolunteerPageState();
+}
+
+class _VolunteerPageState extends State<VolunteerPage> {
+  @override
+  Widget build(BuildContext context) {
+    var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Volunteer Opportunities'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.lock),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                itemCount: opportunities.length,
+                itemBuilder: (context, index) {
+                  if (opportunities[index].status == OpportunityStatus.accepted) {
+                    return ListTile(
+                      title: Text(opportunities[index].organization),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Date: ${opportunities[index].date}'),
+                          Text('Location: ${opportunities[index].location}'),
+                          Text('Description: ${opportunities[index].description}'),
+                        ],
+                      ),
+                      onTap: () {
+                        // Navigate to the details page when the event is tapped
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventDetailsPage(opportunity: opportunities[index]),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EventDetailsPage extends StatelessWidget {
+  final VolunteerOpportunity opportunity;
+
+  EventDetailsPage({required this.opportunity});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Volunteer Page'),
+        title: Text('Event Details'),
       ),
-      body: Center(
-        child: Text("I'm a Volunteer Page Content"),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Organization: ${opportunity.organization}'),
+            Text('Date: ${opportunity.date}'),
+            Text('Time: ${opportunity.time}'),
+            Text('Location: ${opportunity.location}'),
+            Text('Description: ${opportunity.description}'),
+          ],
+        ),
       ),
     );
   }
