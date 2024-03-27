@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 import 'login.dart';
 import 'vollist.dart';
@@ -15,9 +15,9 @@ class _AdminPageState extends State<AdminPage> {
     opportunity.status = OpportunityStatus.accepted;
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
+
   void _rejectOpportunity(VolunteerOpportunity opportunity) {
     opportunity.status = OpportunityStatus.rejected;
-    
   }
 
   void _goToLoginPage() {
@@ -47,34 +47,44 @@ class _AdminPageState extends State<AdminPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _viewVolunteerList,
-              child: Text('View All Volunteers',
-              style: TextStyle(color: accentColor),),
+              child: Text(
+                'View All Volunteers',
+                style: TextStyle(color: accentColor),
+              ),
             ),
             SizedBox(height: 16),
             Text(
               'Pending Opportunities:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold, color: textColor),
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
               child: ListView.builder(
                 itemCount: opportunities.length,
                 itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.pending) {
+                  if (opportunities[index].status ==
+                      OpportunityStatus.pending) {
                     return ListTile(
-                      title: Text(opportunities[index].organization, style: TextStyle(color: textColor),),
-                      subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: accentColor),),
+                      title: Text(
+                        opportunities[index].organization,
+                        style: TextStyle(color: textColor),
+                      ),
+                      subtitle: Text(
+                        'Date: ${opportunities[index].date}',
+                        style: TextStyle(color: accentColor),
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             icon: Icon(Icons.check),
-                            onPressed: () => _acceptOpportunity(opportunities[index]),
+                            onPressed: () =>
+                                _acceptOpportunity(opportunities[index]),
                             color: textColor,
                           ),
                           IconButton(
                             icon: Icon(Icons.close),
-                            onPressed: (){
+                            onPressed: () {
                               _rejectOpportunity(opportunities[index]);
                               setState(() {
                                 opportunities.removeAt(index);
@@ -94,20 +104,22 @@ class _AdminPageState extends State<AdminPage> {
             SizedBox(height: 16),
             Text(
               'Approved Opportunities:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor),
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
               child: ListView.builder(
                 itemCount: opportunities.length,
                 itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.accepted) {
+                  if (opportunities[index].status ==
+                      OpportunityStatus.accepted) {
                     return ListTile(
-                      title: Text(opportunities[index].organization,
-                        style: TextStyle(color: textColor),),
+                      title: Text(
+                        opportunities[index].organization,
+                        style: TextStyle(color: textColor),
+                      ),
                       subtitle: Text('Date: ${opportunities[index].date}',
-                        style: TextStyle(color: accentColor)),
+                          style: TextStyle(color: accentColor)),
                       onTap: () => _viewVolunteerList(),
                     );
                   } else {
