@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 import 'login.dart';
 import 'vollist.dart';
 
 class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
+
   @override
   _AdminPageState createState() => _AdminPageState();
 }
@@ -15,22 +17,22 @@ class _AdminPageState extends State<AdminPage> {
     opportunity.status = OpportunityStatus.accepted;
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
+
   void _rejectOpportunity(VolunteerOpportunity opportunity) {
     opportunity.status = OpportunityStatus.rejected;
-    
   }
 
   void _goToLoginPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
   void _viewVolunteerList() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VolunteerListPage()),
+      MaterialPageRoute(builder: (context) => const VolunteerListPage()),
     );
   }
 
@@ -47,34 +49,44 @@ class _AdminPageState extends State<AdminPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _viewVolunteerList,
-              child: Text('View All Volunteers',
-              style: TextStyle(color: accentColor),),
+              child: Text(
+                'View All Volunteers',
+                style: TextStyle(color: accentColor),
+              ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Pending Opportunities:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold, color: textColor),
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
               child: ListView.builder(
                 itemCount: opportunities.length,
                 itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.pending) {
+                  if (opportunities[index].status ==
+                      OpportunityStatus.pending) {
                     return ListTile(
-                      title: Text(opportunities[index].organization, style: TextStyle(color: textColor),),
-                      subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: accentColor),),
+                      title: Text(
+                        opportunities[index].organization,
+                        style: TextStyle(color: textColor),
+                      ),
+                      subtitle: Text(
+                        'Date: ${opportunities[index].date}',
+                        style: TextStyle(color: accentColor),
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.check),
-                            onPressed: () => _acceptOpportunity(opportunities[index]),
+                            icon: const Icon(Icons.check),
+                            onPressed: () =>
+                                _acceptOpportunity(opportunities[index]),
                             color: textColor,
                           ),
                           IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: (){
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
                               _rejectOpportunity(opportunities[index]);
                               setState(() {
                                 opportunities.removeAt(index);
@@ -86,32 +98,34 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Approved Opportunities:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor),
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
               child: ListView.builder(
                 itemCount: opportunities.length,
                 itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.accepted) {
+                  if (opportunities[index].status ==
+                      OpportunityStatus.accepted) {
                     return ListTile(
-                      title: Text(opportunities[index].organization,
-                        style: TextStyle(color: textColor),),
+                      title: Text(
+                        opportunities[index].organization,
+                        style: TextStyle(color: textColor),
+                      ),
                       subtitle: Text('Date: ${opportunities[index].date}',
-                        style: TextStyle(color: accentColor)),
+                          style: TextStyle(color: accentColor)),
                       onTap: () => _viewVolunteerList(),
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),
