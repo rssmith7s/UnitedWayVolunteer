@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 
 class VolunteerListPage extends StatelessWidget {
@@ -9,7 +9,8 @@ class VolunteerListPage extends StatelessWidget {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     // Extract all volunteers from all opportunities
-    var allVolunteers = opportunities.expand((opportunity) => opportunity.volunteers).toList();
+    var allVolunteers =
+        opportunities.expand((opportunity) => opportunity.volunteers).toList();
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -20,9 +21,8 @@ class VolunteerListPage extends StatelessWidget {
           children: <Widget>[
             Text(
               'Volunteers:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor),
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
               child: ListView.builder(
@@ -30,15 +30,21 @@ class VolunteerListPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var volunteer = allVolunteers[index];
                   return ListTile(
-                    title: Text('${volunteer.firstName} ${volunteer.lastName}',
-                    style: TextStyle(color: textColor),),
+                    title: Text(
+                      '${volunteer.firstName} ${volunteer.lastName}',
+                      style: TextStyle(color: textColor),
+                    ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Phone: ${volunteer.phoneNumber}',
-                        style: TextStyle(color: accentColor),),
-                        Text('Email: ${volunteer.email}',
-                        style: TextStyle(color: accentColor),),
+                        Text(
+                          'Phone: ${volunteer.phoneNumber}',
+                          style: TextStyle(color: accentColor),
+                        ),
+                        Text(
+                          'Email: ${volunteer.email}',
+                          style: TextStyle(color: accentColor),
+                        ),
                       ],
                     ),
                   );
