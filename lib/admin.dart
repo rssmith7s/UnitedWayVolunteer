@@ -49,10 +49,15 @@ class _AdminPageState extends State<AdminPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _viewVolunteerList,
+<<<<<<< Updated upstream
               child: Text(
                 'View All Volunteers',
                 style: TextStyle(color: accentColor),
               ),
+=======
+              child: Text('View All Volunteers',
+              style: TextStyle(color: colorScheme.secondary),),
+>>>>>>> Stashed changes
             ),
             const SizedBox(height: 16),
             Text(
@@ -67,6 +72,7 @@ class _AdminPageState extends State<AdminPage> {
                   if (opportunities[index].status ==
                       OpportunityStatus.pending) {
                     return ListTile(
+<<<<<<< Updated upstream
                       title: Text(
                         opportunities[index].organization,
                         style: TextStyle(color: textColor),
@@ -75,18 +81,30 @@ class _AdminPageState extends State<AdminPage> {
                         'Date: ${opportunities[index].date}',
                         style: TextStyle(color: accentColor),
                       ),
+=======
+                      title: Text(opportunities[index].organization, style: TextStyle(color: textColor),),
+                      subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: colorScheme.secondary),),
+>>>>>>> Stashed changes
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             icon: const Icon(Icons.check),
+<<<<<<< Updated upstream
                             onPressed: () =>
                                 _acceptOpportunity(opportunities[index]),
+=======
+                            onPressed: () => _acceptOpportunity(opportunities[index]),
+>>>>>>> Stashed changes
                             color: textColor,
                           ),
                           IconButton(
                             icon: const Icon(Icons.close),
+<<<<<<< Updated upstream
                             onPressed: () {
+=======
+                            onPressed: (){
+>>>>>>> Stashed changes
                               _rejectOpportunity(opportunities[index]);
                               setState(() {
                                 opportunities.removeAt(index);
@@ -121,7 +139,11 @@ class _AdminPageState extends State<AdminPage> {
                         style: TextStyle(color: textColor),
                       ),
                       subtitle: Text('Date: ${opportunities[index].date}',
+<<<<<<< Updated upstream
                           style: TextStyle(color: accentColor)),
+=======
+                        style: TextStyle(color: colorScheme.secondary)),
+>>>>>>> Stashed changes
                       onTap: () => _viewVolunteerList(),
                     );
                   } else {

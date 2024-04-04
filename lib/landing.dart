@@ -3,7 +3,11 @@ import 'designs.dart';
 import 'login.dart';
 import 'volunteer.dart';
 
+<<<<<<< Updated upstream
 class LandingPage extends StatefulWidget {
+=======
+class LandingPage extends StatefulWidget{
+>>>>>>> Stashed changes
   const LandingPage({super.key});
 
   @override
@@ -13,19 +17,32 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   void _loginpage() {
     Navigator.push(
+<<<<<<< Updated upstream
         context, MaterialPageRoute(builder: (context) => const LoginPage()));
+=======
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage())
+        );
+>>>>>>> Stashed changes
   }
 
   void _guest() {
     Navigator.push(
+<<<<<<< Updated upstream
       context,
       MaterialPageRoute(builder: (context) => const VolunteerPage()),
     );
+=======
+                  context,
+                  MaterialPageRoute(builder: (context) => const VolunteerPage()),
+                );
+>>>>>>> Stashed changes
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< Updated upstream
       appBar: AppBar(
         title: const Text('United Way of SEMO'),
         centerTitle: true,
@@ -42,6 +59,21 @@ class _LandingPageState extends State<LandingPage> {
                   image: NetworkImage(
                       'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png'),
                 )),
+=======
+      appBar: AppBar(title: const Text('United Way of SEMO'),
+      centerTitle: true,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 4), // Adjust the left padding as needed
+        child: Container(
+          width: 100,
+          height: 80,
+          decoration: const BoxDecoration(
+            shape: BoxShape.rectangle,
+            image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: NetworkImage('https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png'),
+            ) 
+>>>>>>> Stashed changes
           ),
         ),
       ),
@@ -56,9 +88,14 @@ class _LandingPageState extends State<LandingPage> {
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(300, 100)),
               ),
+<<<<<<< Updated upstream
               child: const Text(
                 'Login',
                 style: TextStyle(fontSize: 18, color: accentColor),
+=======
+              child: const Text('Login',
+              style: TextStyle(fontSize: 18, color: colorScheme.secondary),
+>>>>>>> Stashed changes
               ),
             ),
             const SizedBox(height: 20),
@@ -67,9 +104,14 @@ class _LandingPageState extends State<LandingPage> {
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(300, 100)),
               ),
+<<<<<<< Updated upstream
               child: const Text(
                 "Continue as Volunteer",
                 style: TextStyle(fontSize: 18, color: accentColor),
+=======
+              child: const Text("Continue as Volunteer",
+              style: TextStyle(fontSize: 18, color: colorScheme.secondary),
+>>>>>>> Stashed changes
               ),
             ),
           ],

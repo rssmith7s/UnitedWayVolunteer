@@ -39,6 +39,7 @@ class VolunteerListPage extends StatelessWidget {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+<<<<<<< Updated upstream
                         Text(
                           'Phone: ${volunteer.phoneNumber}',
                           style: TextStyle(color: accentColor),
@@ -47,6 +48,12 @@ class VolunteerListPage extends StatelessWidget {
                           'Email: ${volunteer.email}',
                           style: TextStyle(color: accentColor),
                         ),
+=======
+                        Text('Phone: ${volunteer.phoneNumber}',
+                        style: TextStyle(color: colorScheme.secondary),),
+                        Text('Email: ${volunteer.email}',
+                        style: TextStyle(color: colorScheme.secondary),),
+>>>>>>> Stashed changes
                       ],
                     ),
                   );

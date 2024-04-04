@@ -29,8 +29,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: const Text('United Way of SEMO'),
       centerTitle: true,
       leading: Padding(
+<<<<<<< Updated upstream
         padding:
             const EdgeInsets.only(left: 4), // Adjust the left padding as needed
+=======
+        padding: const EdgeInsets.only(left: 4), // Adjust the left padding as needed
+>>>>>>> Stashed changes
         child: Container(
           width: 100,
           height: 80,
