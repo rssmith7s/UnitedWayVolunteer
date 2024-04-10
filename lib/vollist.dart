@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 
 class VolunteerListPage extends StatelessWidget {

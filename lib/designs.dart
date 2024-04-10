@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:united_way/landing.dart';
+import 'landing.dart';
 
-const Color primaryColor = Color.fromRGBO(39, 39, 39, 1);
+const Color primaryColor = Color.fromRGBO(14, 23, 128, 1);
 const Color accentColor = Color.fromRGBO(255, 100, 0, 1);
 const Color backgroundColor = Color.fromRGBO(39, 39, 39, 1);
 const Color textColor = Colors.white;
