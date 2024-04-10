@@ -12,36 +12,39 @@ class OpportunityNotifier with ChangeNotifier {
 }
 
 class VolunteerOpportunity {
-  String organization;
+  String title;
   String date;
   String time;
   String location;
   String description;
+  String eventId;
   OpportunityStatus status;
   List<Volunteer> volunteers; // New property to hold a list of volunteers
 
   VolunteerOpportunity({
-    required this.organization,
+    required this.title,
     required this.date,
     required this.time,
     required this.location,
     required this.description,
     required this.status,
+    required this.eventId,
     List<Volunteer>? volunteers, // Provide a default empty list
   }) : volunteers = volunteers ?? [];
 }
 
 class Volunteer {
-  String firstName;
-  String lastName;
-  String phoneNumber;
+  String first_name;
+  String last_name;
   String email;
+  String phone;
+  
 
   Volunteer({
-    required this.firstName,
-    required this.lastName,
-    required this.phoneNumber,
+    required this.first_name,
+    required this.last_name,
     required this.email,
+    required this.phone,
   });
 }
 

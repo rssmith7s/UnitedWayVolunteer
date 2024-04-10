@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 import 'login.dart';
 import 'vollist.dart';
+import 'supabase_functions.dart';
 
 class AdminPage extends StatefulWidget {
   @override
@@ -11,12 +13,15 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
+  
   void _acceptOpportunity(VolunteerOpportunity opportunity) {
+    updateOpportunityStatus(opportunity.title);
     opportunity.status = OpportunityStatus.accepted;
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
   void _rejectOpportunity(VolunteerOpportunity opportunity) {
     opportunity.status = OpportunityStatus.rejected;
+    removeOpportunity(opportunity.title);
     
   }
 
@@ -62,14 +67,16 @@ class _AdminPageState extends State<AdminPage> {
                 itemBuilder: (context, index) {
                   if (opportunities[index].status == OpportunityStatus.pending) {
                     return ListTile(
-                      title: Text(opportunities[index].organization, style: TextStyle(color: textColor),),
+                      title: Text(opportunities[index].title, style: TextStyle(color: textColor),),
                       subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: accentColor),),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             icon: Icon(Icons.check),
-                            onPressed: () => _acceptOpportunity(opportunities[index]),
+                            onPressed: () {
+                              _acceptOpportunity(opportunities[index]);
+                            },
                             color: textColor,
                           ),
                           IconButton(
@@ -104,7 +111,7 @@ class _AdminPageState extends State<AdminPage> {
                 itemBuilder: (context, index) {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
-                      title: Text(opportunities[index].organization,
+                      title: Text(opportunities[index].title,
                         style: TextStyle(color: textColor),),
                       subtitle: Text('Date: ${opportunities[index].date}',
                         style: TextStyle(color: accentColor)),

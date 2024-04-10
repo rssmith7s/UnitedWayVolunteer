@@ -28,7 +28,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                 itemBuilder: (context, index) {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
-                      title: Text(opportunities[index].organization,
+                      title: Text(opportunities[index].title,
                         style: TextStyle(color: textColor)),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

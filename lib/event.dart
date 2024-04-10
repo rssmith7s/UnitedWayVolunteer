@@ -1,3 +1,4 @@
+//event.dart
 import 'package:flutter/material.dart';
 import 'opportunity.dart';
 import 'designs.dart';
@@ -29,10 +30,10 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       email.isNotEmpty) {
     // Create a new Volunteer object
     Volunteer newVolunteer = Volunteer(
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
+      first_name: firstName,
+      last_name: lastName,
       email: email,
+      phone: phoneNumber,
     );
 
     // Add the new volunteer to the opportunity's list of volunteers
@@ -78,7 +79,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Organization: ${widget.opportunity.organization}',
+            Text('Title: ${widget.opportunity.title}',
               style: TextStyle(color: textColor)),
             Text('Date: ${widget.opportunity.date}',
               style: TextStyle(color: textColor)),

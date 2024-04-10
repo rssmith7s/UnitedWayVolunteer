@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:united_way/designs.dart';
+import 'designs.dart';
 import 'opportunity.dart';
 
 class VolunteerListPage extends StatelessWidget {
@@ -30,12 +30,12 @@ class VolunteerListPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var volunteer = allVolunteers[index];
                   return ListTile(
-                    title: Text('${volunteer.firstName} ${volunteer.lastName}',
+                    title: Text('${volunteer.first_name} ${volunteer.last_name}',
                     style: TextStyle(color: textColor),),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Phone: ${volunteer.phoneNumber}',
+                        Text('Phone: ${volunteer.phone}',
                         style: TextStyle(color: accentColor),),
                         Text('Email: ${volunteer.email}',
                         style: TextStyle(color: accentColor),),

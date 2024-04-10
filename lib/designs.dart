@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:united_way/landing.dart';
+import 'landing.dart';
 
 const Color primaryColor = Color.fromRGBO(39, 39, 39, 1);
 const Color accentColor = Color.fromRGBO(255, 100, 0, 1);

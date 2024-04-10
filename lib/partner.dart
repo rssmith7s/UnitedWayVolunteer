@@ -1,7 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'opportunity.dart';
 import 'designs.dart';
+import 'supabase_functions.dart';
 
 class PartnerPage extends StatefulWidget {
   @override
@@ -9,38 +12,44 @@ class PartnerPage extends StatefulWidget {
 }
 
 class _PartnerPageState extends State<PartnerPage> {
-  TextEditingController organizationController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
+  
+
   void _submitOpportunity() {
-    String organization = organizationController.text.trim();
+    String title = titleController.text.trim();
     String date = dateController.text.trim();
     String time = timeController.text.trim();
     String location = locationController.text.trim();
     String description = descriptionController.text.trim();
+    String eventId = '';
 
-    if (organization.isNotEmpty &&
+    if (title.isNotEmpty &&
         date.isNotEmpty &&
         time.isNotEmpty &&
         location.isNotEmpty &&
         description.isNotEmpty) {
       VolunteerOpportunity opportunity = VolunteerOpportunity(
-        organization: organization,
+        title: title,
         date: date,
         time: time,
         location: location,
         description: description,
+        eventId: eventId,
         status: OpportunityStatus.pending,
       );
+
+      insertOpportunity(opportunity);
 
       var opportunities = Provider.of<OpportunityNotifier>(context, listen: false);
       opportunities.opportunities.add(opportunity);
       opportunities.notifyListeners();
 
-      organizationController.clear();
+      titleController.clear();
       dateController.clear();
       timeController.clear();
       locationController.clear();
@@ -94,7 +103,7 @@ class _PartnerPageState extends State<PartnerPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
-              controller: organizationController,
+              controller: titleController,
               decoration: InputDecoration(labelText: 'Organization'),
               style: TextStyle(color: textColor),
               cursorColor: accentColor,
@@ -140,7 +149,7 @@ class _PartnerPageState extends State<PartnerPage> {
                 itemBuilder: (context, index) {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
-                      title: Text(opportunities[index].organization,
+                      title: Text(opportunities[index].title,
                         style: TextStyle(color: textColor),),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
