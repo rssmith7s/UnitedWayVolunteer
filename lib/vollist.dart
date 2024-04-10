@@ -13,40 +13,67 @@ class VolunteerListPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Volunteers:',
-              style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: allVolunteers.length,
-                itemBuilder: (context, index) {
-                  var volunteer = allVolunteers[index];
-                  return ListTile(
-                    title: Text('${volunteer.firstName} ${volunteer.lastName}',
-                    style: TextStyle(color: textColor),),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Phone: ${volunteer.phoneNumber}',
-                        style: TextStyle(color: accentColor),),
-                        Text('Email: ${volunteer.email}',
-                        style: TextStyle(color: accentColor),),
-                      ],
-                    ),
-                  );
-                },
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Image.network(
+                'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png',
+                width: 100,
+                height: 80,
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 100.0, 16.0, 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Volunteers:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: allVolunteers.length,
+                    itemBuilder: (context, index) {
+                      var volunteer = allVolunteers[index];
+                      return ListTile(
+                        title: Text(
+                          '${volunteer.firstName} ${volunteer.lastName}',
+                          style: TextStyle(color: textColor),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Phone: ${volunteer.phoneNumber}',
+                              style: TextStyle(color: accentColor),
+                            ),
+                            Text(
+                              'Email: ${volunteer.email}',
+                              style: TextStyle(color: accentColor),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

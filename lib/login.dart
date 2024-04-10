@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color:primaryColor)),
+              child: Text('OK', style: TextStyle(color: primaryColor)),
             ),
           ],
         ),
@@ -50,46 +50,67 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-              style: TextStyle(color: textColor),
-              cursorColor: accentColor,
-            ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-              style: TextStyle(color: textColor),
-              cursorColor: accentColor,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Login',
-              style: TextStyle(color: accentColor),
+      body: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                  style: TextStyle(color: textColor),
+                  cursorColor: accentColor,
+                ),
               ),
-              
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: 'Password'),
+                  style: TextStyle(color: textColor),
+                  cursorColor: accentColor,
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _login,
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: accentColor),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                  );
+                },
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(color: accentColor),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Image.network(
+                'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png',
+                width: 100,
+                height: 80,
+              ),
             ),
-            SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
-                );
-              },
-              child: Text('Forgot Password?',
-              style: TextStyle(color: accentColor)),
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
