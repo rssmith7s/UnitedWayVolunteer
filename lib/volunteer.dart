@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'opportunity.dart';
-import 'login.dart';
 import 'event.dart';
 import 'designs.dart';
 
