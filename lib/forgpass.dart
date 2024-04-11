@@ -53,25 +53,41 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-              style: TextStyle(color: textColor),
-              cursorColor: accentColor,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Image.network(
+                'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png',
+                width: 100,
+                height: 80,
+              ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _sendResetInstructions,
-              child: Text('Send Reset Instructions',
-              style: TextStyle(color: accentColor)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                  style: TextStyle(color: textColor),
+                  cursorColor: accentColor,
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _sendResetInstructions,
+                  child: Text('Send Reset Instructions',
+                  style: TextStyle(color: accentColor)),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
