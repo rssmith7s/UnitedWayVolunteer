@@ -8,6 +8,8 @@ import 'vollist.dart';
 import 'supabase_functions.dart';
 
 class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
+
   @override
   _AdminPageState createState() => _AdminPageState();
 }
@@ -28,14 +30,14 @@ class _AdminPageState extends State<AdminPage> {
   void _goToLoginPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
   void _viewVolunteerList() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => VolunteerListPage()),
+      MaterialPageRoute(builder: (context) => const VolunteerListPage()),
     );
   }
 
@@ -44,7 +46,7 @@ class _AdminPageState extends State<AdminPage> {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -52,11 +54,11 @@ class _AdminPageState extends State<AdminPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _viewVolunteerList,
-              child: Text('View All Volunteers',
+              child: const Text('View All Volunteers',
               style: TextStyle(color: accentColor),),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Pending Opportunities:',
               style: TextStyle(fontSize: 18,
               fontWeight: FontWeight.bold, color: textColor),
@@ -67,20 +69,20 @@ class _AdminPageState extends State<AdminPage> {
                 itemBuilder: (context, index) {
                   if (opportunities[index].status == OpportunityStatus.pending) {
                     return ListTile(
-                      title: Text(opportunities[index].title, style: TextStyle(color: textColor),),
-                      subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: accentColor),),
+                      title: Text(opportunities[index].title, style: const TextStyle(color: textColor),),
+                      subtitle: Text('Date: ${opportunities[index].date}', style: const TextStyle(color: accentColor),),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.check),
+                            icon: const Icon(Icons.check),
                             onPressed: () {
                               _acceptOpportunity(opportunities[index]);
                             },
                             color: textColor,
                           ),
                           IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: (){
                               _rejectOpportunity(opportunities[index]);
                               setState(() {
@@ -93,13 +95,13 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Approved Opportunities:',
               style: TextStyle(fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -112,13 +114,13 @@ class _AdminPageState extends State<AdminPage> {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
                       title: Text(opportunities[index].title,
-                        style: TextStyle(color: textColor),),
+                        style: const TextStyle(color: textColor),),
                       subtitle: Text('Date: ${opportunities[index].date}',
-                        style: TextStyle(color: accentColor)),
+                        style: const TextStyle(color: accentColor)),
                       onTap: () => _viewVolunteerList(),
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),

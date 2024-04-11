@@ -18,18 +18,18 @@ const InputDecorationTheme customInTheme =InputDecorationTheme(
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String imageUrl = 'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png';
 
-  CustomAppBar();
+  const CustomAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('United Way of SEMO'),
+      title: const Text('United Way of SEMO'),
       centerTitle: true,
       leading: Padding(
-        padding: EdgeInsets.only(left: 4), // Adjust the left padding as needed
+        padding: const EdgeInsets.only(left: 4), // Adjust the left padding as needed
         child: Container(
           width: 100,
           height: 80,
@@ -44,11 +44,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.lock),
+          icon: const Icon(Icons.lock),
           onPressed: () {
             Navigator.pushReplacement(
               context, 
-              MaterialPageRoute(builder: (context)=>LandingPage())
+              MaterialPageRoute(builder: (context)=>const LandingPage())
               );
           },
         ),

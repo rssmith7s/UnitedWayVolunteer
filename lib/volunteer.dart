@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'opportunity.dart';
-import 'login.dart';
 import 'event.dart';
 import 'designs.dart';
 
 class VolunteerPage extends StatefulWidget {
+  const VolunteerPage({super.key});
+
   @override
   _VolunteerPageState createState() => _VolunteerPageState();
 }
@@ -16,7 +17,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -29,16 +30,16 @@ class _VolunteerPageState extends State<VolunteerPage> {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
                       title: Text(opportunities[index].title,
-                        style: TextStyle(color: textColor)),
+                        style: const TextStyle(color: textColor)),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Date: ${opportunities[index].date}',
-                            style: TextStyle(color: accentColor)),
+                            style: const TextStyle(color: accentColor)),
                           Text('Location: ${opportunities[index].location}',
-                            style: TextStyle(color: accentColor)),
+                            style: const TextStyle(color: accentColor)),
                           Text('Description: ${opportunities[index].description}',
-                            style: TextStyle(color: accentColor)),
+                            style: const TextStyle(color: accentColor)),
                         ],
                       ),
                       onTap: () {
@@ -52,7 +53,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
                       },
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),

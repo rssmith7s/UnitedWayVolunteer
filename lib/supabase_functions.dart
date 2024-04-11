@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'landing.dart';
-import 'designs.dart';
 import 'opportunity.dart';
 
 // void fetchData() async {

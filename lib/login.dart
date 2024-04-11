@@ -5,6 +5,8 @@ import 'forgpass.dart';
 import 'designs.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -20,25 +22,25 @@ class _LoginPageState extends State<LoginPage> {
     if (username == 'admin' && password == 'adminpassword') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminPage()),
+        MaterialPageRoute(builder: (context) => const AdminPage()),
       );
     } else if (username == 'partner' && password == 'partnerpassword') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PartnerPage()),
+        MaterialPageRoute(builder: (context) => const PartnerPage()),
       );
     } else {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('Invalid username or password.'),
+          title: const Text('Login Failed'),
+          content: const Text('Invalid username or password.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color:primaryColor)),
+              child: const Text('OK', style: TextStyle(color:primaryColor)),
             ),
           ],
         ),
@@ -49,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -57,37 +59,37 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             TextField(
               controller: usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Username'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Password'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _login,
-              child: Text('Login',
+              child: const Text('Login',
               style: TextStyle(color: accentColor),
               ),
               
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                  MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
                 );
               },
-              child: Text('Forgot Password?',
+              child: const Text('Forgot Password?',
               style: TextStyle(color: accentColor)),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         ),
       ),

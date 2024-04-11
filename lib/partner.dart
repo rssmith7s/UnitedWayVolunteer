@@ -7,6 +7,8 @@ import 'designs.dart';
 import 'supabase_functions.dart';
 
 class PartnerPage extends StatefulWidget {
+  const PartnerPage({super.key});
+
   @override
   _PartnerPageState createState() => _PartnerPageState();
 }
@@ -58,13 +60,13 @@ class _PartnerPageState extends State<PartnerPage> {
       showDialog(
         context: context, 
         builder: (context) => AlertDialog(
-          content: Text('Opportunity Submitted'),
+          content: const Text('Opportunity Submitted'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK',
+              child: const Text('OK',
               style: TextStyle(color: accentColor),),
             ),
          ],
@@ -74,14 +76,14 @@ class _PartnerPageState extends State<PartnerPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Please fill in all fields.'),
+          title: const Text('Error'),
+          content: const Text('Please fill in all fields.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK',
+              child: const Text('OK',
               style: TextStyle(color: accentColor),),
             ),
           ],
@@ -96,7 +98,7 @@ class _PartnerPageState extends State<PartnerPage> {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -104,42 +106,42 @@ class _PartnerPageState extends State<PartnerPage> {
           children: <Widget>[
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Organization'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Organization'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: dateController,
-              decoration: InputDecoration(labelText: 'Date'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Date'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: timeController,
-              decoration: InputDecoration(labelText: 'Time'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Time'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: locationController,
-              decoration: InputDecoration(labelText: 'Location'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Location'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Description'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitOpportunity,
-              child: Text('Submit Opportunity',
+              child: const Text('Submit Opportunity',
               style: TextStyle(color: accentColor) ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Accepted Opportunities:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
             ),
@@ -150,21 +152,21 @@ class _PartnerPageState extends State<PartnerPage> {
                   if (opportunities[index].status == OpportunityStatus.accepted) {
                     return ListTile(
                       title: Text(opportunities[index].title,
-                        style: TextStyle(color: textColor),),
+                        style: const TextStyle(color: textColor),),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Date: ${opportunities[index].date}',
-                          style: TextStyle(color: textColor),),
+                          style: const TextStyle(color: textColor),),
                           Text('Location: ${opportunities[index].location}',
-                          style: TextStyle(color: accentColor),),
+                          style: const TextStyle(color: accentColor),),
                           Text('Description: ${opportunities[index].description}',
-                        style: TextStyle(color: accentColor),),
+                        style: const TextStyle(color: accentColor),),
                         ],
                       ),
                     );
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 },
               ),

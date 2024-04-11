@@ -6,7 +6,7 @@ import 'designs.dart';
 class EventDetailsPage extends StatefulWidget {
   final VolunteerOpportunity opportunity;
 
-  EventDetailsPage({required this.opportunity});
+  const EventDetailsPage({super.key, required this.opportunity});
 
   @override
   _EventDetailsPageState createState() => _EventDetailsPageState();
@@ -55,14 +55,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Error'),
-        content: Text('Please fill in all fields.'),
+        title: const Text('Error'),
+        content: const Text('Please fill in all fields.'),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -73,53 +73,53 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Title: ${widget.opportunity.title}',
-              style: TextStyle(color: textColor)),
+              style: const TextStyle(color: textColor)),
             Text('Date: ${widget.opportunity.date}',
-              style: TextStyle(color: textColor)),
+              style: const TextStyle(color: textColor)),
             Text('Time: ${widget.opportunity.time}',
-              style: TextStyle(color: textColor)),
+              style: const TextStyle(color: textColor)),
             Text('Location: ${widget.opportunity.location}',
-              style: TextStyle(color: textColor)),
+              style: const TextStyle(color: textColor)),
             Text('Description: ${widget.opportunity.description}',
-              style: TextStyle(color: textColor)),
-            SizedBox(height: 20),
-            Text('Volunteer Information Form:',
+              style: const TextStyle(color: textColor)),
+            const SizedBox(height: 20),
+            const Text('Volunteer Information Form:',
               style: TextStyle(color: textColor)),
             TextField(
               controller: firstNameController,
-              decoration: InputDecoration(labelText: 'First Name'),
+              decoration: const InputDecoration(labelText: 'First Name'),
               cursorColor: accentColor,
-              style: TextStyle(color: textColor),
+              style: const TextStyle(color: textColor),
             ),
             TextField(
               controller: lastNameController,
-              decoration: InputDecoration(labelText: 'Last Name'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Last Name'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: phoneNumberController,
-              decoration: InputDecoration(labelText: 'Phone Number'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Phone Number'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              style: TextStyle(color: textColor),
+              decoration: const InputDecoration(labelText: 'Email'),
+              style: const TextStyle(color: textColor),
               cursorColor: accentColor,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitVolunteerInfo,
-              child: Text('Submit Volunteer Information',
+              child: const Text('Submit Volunteer Information',
               style: TextStyle(color: accentColor),),
             ),
           ],

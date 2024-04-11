@@ -4,6 +4,8 @@ import 'designs.dart';
 import 'opportunity.dart';
 
 class VolunteerListPage extends StatelessWidget {
+  const VolunteerListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
@@ -12,13 +14,13 @@ class VolunteerListPage extends StatelessWidget {
     var allVolunteers = opportunities.expand((opportunity) => opportunity.volunteers).toList();
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Volunteers:',
               style: TextStyle(fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -31,14 +33,14 @@ class VolunteerListPage extends StatelessWidget {
                   var volunteer = allVolunteers[index];
                   return ListTile(
                     title: Text('${volunteer.first_name} ${volunteer.last_name}',
-                    style: TextStyle(color: textColor),),
+                    style: const TextStyle(color: textColor),),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Phone: ${volunteer.phone}',
-                        style: TextStyle(color: accentColor),),
+                        style: const TextStyle(color: accentColor),),
                         Text('Email: ${volunteer.email}',
-                        style: TextStyle(color: accentColor),),
+                        style: const TextStyle(color: accentColor),),
                       ],
                     ),
                   );

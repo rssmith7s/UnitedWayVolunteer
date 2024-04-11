@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'opportunity.dart';
 import 'landing.dart';
 import 'designs.dart';
-import 'supabase_functions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,13 +17,15 @@ void main() async {
     
     ChangeNotifierProvider(
       create: (context) => OpportunityNotifier(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,10 +34,10 @@ class MyApp extends StatelessWidget {
         primaryColor: primaryColor,
         scaffoldBackgroundColor: primaryColor,
         unselectedWidgetColor: accentColor,
-        appBarTheme: AppBarTheme(color: accentColor),
+        appBarTheme: const AppBarTheme(color: accentColor),
         inputDecorationTheme: customInTheme,
       ),
-      home: LandingPage(),
+      home: const LandingPage(),
     );
   }
 }
