@@ -38,7 +38,7 @@ class _PartnerPageState extends State<PartnerPage> {
 
       var opportunities = Provider.of<OpportunityNotifier>(context, listen: false);
       opportunities.opportunities.add(opportunity);
-      opportunities.notifyListeners();
+      // opportunities.notifyListeners();
 
       organizationController.clear();
       dateController.clear();

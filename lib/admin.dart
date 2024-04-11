@@ -13,7 +13,7 @@ class AdminPage extends StatefulWidget {
 class _AdminPageState extends State<AdminPage> {
   void _acceptOpportunity(VolunteerOpportunity opportunity) {
     opportunity.status = OpportunityStatus.accepted;
-    Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
+    // Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
   void _rejectOpportunity(VolunteerOpportunity opportunity) {
     opportunity.status = OpportunityStatus.rejected;
