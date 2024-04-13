@@ -14,13 +14,32 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   
-  void _acceptOpportunity(VolunteerOpportunity opportunity) {
+  Future<List<VolunteerOpportunityDatabase>> getAllOpportunities() async {
+    List<VolunteerOpportunityDatabase> opportunitiesdb = [];
+    List tableData = await fetchData('event_table');
+    for (var i = 0; i < tableData.length; i++) {
+    VolunteerOpportunityDatabase opportunitydb = VolunteerOpportunityDatabase(
+      title: tableData[i]['title'],
+      date: tableData[i]['date'],
+      time: tableData[i]['time'],
+      location: tableData[i]['location'],
+      description: tableData[i]['description'],
+      eventId: tableData[i]['event_id'],
+      status: tableData[i]['status'],
+    );
+    opportunitiesdb.add(opportunitydb);
+    print(opportunitydb);
+    }
+    
+    return opportunitiesdb;
+  }
+  
+  void _acceptOpportunity(VolunteerOpportunityDatabase opportunity) {
     updateOpportunityStatus(opportunity.title);
-    opportunity.status = OpportunityStatus.accepted;
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
-  void _rejectOpportunity(VolunteerOpportunity opportunity) {
-    opportunity.status = OpportunityStatus.rejected;
+  void _rejectOpportunity(VolunteerOpportunityDatabase opportunity) {
+
     removeOpportunity(opportunity.title);
     
   }
@@ -38,10 +57,9 @@ class _AdminPageState extends State<AdminPage> {
       MaterialPageRoute(builder: (context) => VolunteerListPage()),
     );
   }
-
   @override
   Widget build(BuildContext context) {
-    var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
+    Future<List> opportunities = getAllOpportunities();
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -62,38 +80,53 @@ class _AdminPageState extends State<AdminPage> {
               fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: opportunities.length,
-                itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.pending) {
-                    return ListTile(
-                      title: Text(opportunities[index].title, style: TextStyle(color: textColor),),
-                      subtitle: Text('Date: ${opportunities[index].date}', style: TextStyle(color: accentColor),),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.check),
-                            onPressed: () {
-                              _acceptOpportunity(opportunities[index]);
-                            },
-                            color: textColor,
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: (){
-                              _rejectOpportunity(opportunities[index]);
-                              setState(() {
-                                opportunities.removeAt(index);
-                              });
-                            },
-                            color: textColor,
-                          ),
-                        ],
-                      ),
+              child: FutureBuilder<List>(
+                future: opportunities,
+                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        if (snapshot.data?[index].status == false) {
+                          return ListTile(
+                            title: Text(snapshot.data?[index]?.title ?? '', style: TextStyle(color: textColor),),
+                            subtitle: Text('Date: ${snapshot.data?[index].date}', style: TextStyle(color: accentColor),),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.check),
+                                  onPressed: () {
+                                    _acceptOpportunity(snapshot.data?[index]);
+                                    setState(() {
+                                      opportunities = getAllOpportunities();
+                                    });
+                                  },
+                                  color: textColor,
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.close),
+                                  onPressed: (){
+                                    _rejectOpportunity(snapshot.data?[index]);
+                                    setState(() {
+                                      opportunities = getAllOpportunities();
+                                    });
+                                  },
+                                  color: textColor,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
                     );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
                   } else {
-                    return SizedBox.shrink();
+                    // While data is loading:
+                    return CircularProgressIndicator();
                   }
                 },
               ),
@@ -102,23 +135,34 @@ class _AdminPageState extends State<AdminPage> {
             Text(
               'Approved Opportunities:',
               style: TextStyle(fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor),
+              fontWeight: FontWeight.bold, color: textColor),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: opportunities.length,
-                itemBuilder: (context, index) {
-                  if (opportunities[index].status == OpportunityStatus.accepted) {
-                    return ListTile(
-                      title: Text(opportunities[index].title,
-                        style: TextStyle(color: textColor),),
-                      subtitle: Text('Date: ${opportunities[index].date}',
-                        style: TextStyle(color: accentColor)),
-                      onTap: () => _viewVolunteerList(),
+              child: FutureBuilder<List>(
+                future: opportunities,
+                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        if (snapshot.data?[index].status == true) {
+                          return ListTile(
+                            title: Text(snapshot.data?[index].title,
+                              style: TextStyle(color: textColor),),
+                            subtitle: Text('Date: ${snapshot.data?[index].date}',
+                              style: TextStyle(color: accentColor)),
+                            onTap: () => _viewVolunteerList(),
+                          );
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
                     );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
                   } else {
-                    return SizedBox.shrink();
+                    // While data is loading:
+                    return CircularProgressIndicator();
                   }
                 },
               ),
@@ -127,5 +171,5 @@ class _AdminPageState extends State<AdminPage> {
         ),
       ),
     );
-  }
-}
+  } //Widget
+} //Class

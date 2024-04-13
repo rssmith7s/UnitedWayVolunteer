@@ -17,12 +17,26 @@ import 'opportunity.dart';
 //     }
 // }
 
+ fetchData(String table) async {
+  final response = await Supabase.instance.client
+      .from(table)
+      .select('*');
+
+  if (response != null) {
+      for (final row in response) {
+        print('Fetched row: $row');
+      }
+    }
+  return response;
+}
+
 Future<void> updateOpportunityStatus(String title) async {
   final supabase = Supabase.instance.client;
 
   final response = await supabase
       .from('event_table')
-      .update({'status': true}).eq('title', title);
+      .update({'status': true})
+      .eq('title', title);
 
   if (response.error != null) {
     throw Exception(
@@ -32,7 +46,9 @@ Future<void> updateOpportunityStatus(String title) async {
 
 Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
   try {
-    final response = await Supabase.instance.client.from('event_table').insert({
+    final response = await Supabase.instance.client
+    .from('event_table')
+    .insert({
       'title': opportunity.title,
       'date': opportunity.date,
       'time': opportunity.time,
@@ -40,13 +56,7 @@ Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
       'description': opportunity.description,
     });
 
-    final List<dynamic> insertedEvents = response.data ?? [];
-    final Map<String, dynamic> insertedEvent =
-        insertedEvents.isNotEmpty ? insertedEvents[0] : {};
-    final String eventId = insertedEvent['event_id'] as String;
-    opportunity.eventId = eventId;
 
-    //print eventId dumbass
 
     if (response.error != null && response.error.message != null) {
       print('Error inserting opportunity: ${response.error.message}');
@@ -62,12 +72,12 @@ Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
   }
 }
 
-Future<void> removeOpportunity(String eventId) async {
+Future<void> removeOpportunity(String title) async {
   try {
     final response = await Supabase.instance.client
         .from('event_table')
         .delete()
-        .eq('event_id', eventId);
+        .eq('title', title);
 
     if (response.error != null && response.error.message != null) {
       // Handle error

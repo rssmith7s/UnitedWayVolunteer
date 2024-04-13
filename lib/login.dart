@@ -17,12 +17,12 @@ class _LoginPageState extends State<LoginPage> {
     String username = usernameController.text.trim();
     String password = passwordController.text.trim();
 
-    if (username == 'admin' && password == 'adminpassword') {
+    if (username == 'a' && password == 'a') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => AdminPage()),
       );
-    } else if (username == 'partner' && password == 'partnerpassword') {
+    } else if (username == 'p' && password == 'p') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => PartnerPage()),
