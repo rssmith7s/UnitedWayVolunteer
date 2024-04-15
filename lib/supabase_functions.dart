@@ -51,8 +51,6 @@ Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
     } else {
       print('Opportunity inserted successfully');
     }
-
-    
   } catch (error) {
     print('Error inserting opportunity(catch): $error');
   }
