@@ -181,7 +181,7 @@ class DiagonalLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
+      ..color = alternateColor
       ..strokeWidth = 3.0;
 
     if (isBottomLeftAngle) {
