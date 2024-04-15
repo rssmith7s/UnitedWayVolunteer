@@ -40,3 +40,75 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+
+class CustomBackground extends StatelessWidget {
+  final Widget child;
+
+  CustomBackground({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          color: primaryColor,
+        ),
+        Positioned(
+          top: 0,
+          left: 0,
+          child: CustomPaint(
+            size: Size(50, 50),
+            painter: DiagonalLinePainter(),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: CustomPaint(
+            size: Size(50, 50),
+            painter: DiagonalLinePainter(),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: CustomPaint(
+            size: Size(50, 50),
+            painter: DiagonalLinePainter(),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: CustomPaint(
+            size: Size(50, 50),
+            painter: DiagonalLinePainter(),
+          ),
+        ),
+        child,
+      ],
+    );
+  }
+}
+
+class DiagonalLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 3.0;
+
+    // Draw top-left to bottom-right diagonal line
+    canvas.drawLine(Offset(0, 0), Offset(size.width, size.height), paint);
+
+    // Draw top-right to bottom-left diagonal line
+    canvas.drawLine(Offset(size.width, 0), Offset(0, size.height), paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+
