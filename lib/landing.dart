@@ -171,8 +171,6 @@ class CustomBackground extends StatelessWidget {
   }
 }
 
-
-
 class DiagonalLinePainter extends CustomPainter {
   final bool isBottomLeftAngle;
 
