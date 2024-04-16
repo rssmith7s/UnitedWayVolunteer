@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'opportunity.dart';
 import 'designs.dart';
+import 'dart:io';
 
 class PartnerPage extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class _PartnerPageState extends State<PartnerPage> {
   TextEditingController timeController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  File? _imageFile;
 
   void _submitOpportunity() {
     String organization = organizationController.text.trim();
@@ -57,8 +60,8 @@ class _PartnerPageState extends State<PartnerPage> {
               },
               child: Text('OK', style: TextStyle(color: accentColor)),
             ),
-         ],
-       ),
+          ],
+        ),
       );
     } else {
       showDialog(
@@ -77,7 +80,6 @@ class _PartnerPageState extends State<PartnerPage> {
         ),
       );
     }
-
   }
 
   @override
@@ -141,6 +143,8 @@ class _PartnerPageState extends State<PartnerPage> {
                       style: TextStyle(color: textColor),
                       cursorColor: accentColor,
                     ),
+                    SizedBox(height: 20),
+                    _buildImagePicker(),
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _submitOpportunity,
@@ -246,6 +250,42 @@ class _PartnerPageState extends State<PartnerPage> {
         ],
       ),
     );
+  }
+
+Widget _buildImagePicker() {
+  return Column(
+    children: [
+      ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 150), // Set maximum width for the button
+        child: ElevatedButton(
+          onPressed: () {
+            _pickImage(); // Always open the image picker
+          },
+          child: Text(
+            'Upload Flyer',
+            style: TextStyle(color: accentColor),
+          ),
+        ),
+      ),
+      SizedBox(height: 10),
+      if (_imageFile != null)
+        Text(
+          'Selected Image: ${_imageFile!.path}',
+          style: TextStyle(color: textColor),
+        ),
+    ],
+  );
+}
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
   }
 }
 
