@@ -64,9 +64,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // fetchData();
-              },
+              onPressed: _guest,
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(Size(300, 100)),
               ),

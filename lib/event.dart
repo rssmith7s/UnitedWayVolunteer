@@ -1,10 +1,12 @@
 //event.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/supabase_functions.dart';
+import 'supabase_functions.dart';
 import 'opportunity.dart';
 import 'designs.dart';
 
 class EventDetailsPage extends StatefulWidget {
-  final VolunteerOpportunity opportunity;
+  final VolunteerOpportunityDatabase opportunity;
 
   EventDetailsPage({required this.opportunity});
 
@@ -34,10 +36,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       last_name: lastName,
       email: email,
       phone: phoneNumber,
+      category: 'Volunteer',
+      eventId: widget.opportunity.eventId,
     );
 
+    insertVolunteer(newVolunteer);
+
     // Add the new volunteer to the opportunity's list of volunteers
-    widget.opportunity.volunteers.add(newVolunteer);
+    // widget.opportunity.volunteers.add(newVolunteer);
 
     // You can implement logic to send this information to the administrator and partner
     // For simplicity, let's just print the information for now

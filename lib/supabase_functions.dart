@@ -17,7 +17,7 @@ import 'opportunity.dart';
 //     }
 // }
 
- fetchData(String table) async {
+fetchData(String table) async {
   final response = await Supabase.instance.client
       .from(table)
       .select('*');
@@ -29,6 +29,35 @@ import 'opportunity.dart';
     }
   return response;
 }
+
+ fetchVolunteers(String table) async {
+  final response = await Supabase.instance.client
+      .from(table)
+      .select('*')
+      .like('category', 'volunteer');
+
+  if (response != null) {
+      for (final row in response) {
+        print('Fetched row: $row');
+      }
+    }
+  return response;
+}
+
+fetchSpecific(String table, String row, String column) async {
+  final response = await Supabase.instance.client
+      .from(table)
+      .select('*')
+      .like(column, row); // (event_id, specific_id)
+
+  if (response != null) {
+      for (final row in response) {
+        print('Fetched row: $row');
+      }
+    }
+  return response;
+}
+
 
 Future<void> updateOpportunityStatus(String title) async {
   final supabase = Supabase.instance.client;
@@ -101,6 +130,7 @@ Future<void> insertVolunteer(Volunteer volunteer) async {
       'last_name': volunteer.last_name,
       'email': volunteer.email,
       'phone': volunteer.phone,
+      'event_id': volunteer.eventId,
     });
 
     if (response.error != null && response.error.message != null) {

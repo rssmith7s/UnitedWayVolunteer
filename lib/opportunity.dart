@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OpportunityNotifier with ChangeNotifier {
   List<VolunteerOpportunity> _opportunities = [];
   List<VolunteerOpportunityDatabase> _opportunitiesdb = [];
-
+  
   List<VolunteerOpportunity> get opportunities => _opportunities;
   List<VolunteerOpportunityDatabase> get opportunitiesdb => _opportunitiesdb;
 
@@ -15,8 +15,6 @@ class OpportunityNotifier with ChangeNotifier {
     _opportunitiesdb = opportunitiesdb;
     notifyListeners();
   }
-
-
 }
 
 
@@ -69,9 +67,28 @@ class Volunteer {
   String last_name;
   String email;
   String phone;
+  String category;
+  String eventId;
   
 
   Volunteer({
+    required this.first_name,
+    required this.last_name,
+    required this.email,
+    required this.phone,
+    required this.category,
+    required this.eventId,
+  });
+}
+
+class VolunteerDatabase {
+  String first_name;
+  String last_name;
+  String email;
+  String phone;
+  
+
+  VolunteerDatabase({
     required this.first_name,
     required this.last_name,
     required this.email,

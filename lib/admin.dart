@@ -28,7 +28,6 @@ class _AdminPageState extends State<AdminPage> {
       status: tableData[i]['status'],
     );
     opportunitiesdb.add(opportunitydb);
-    print(opportunitydb);
     }
     
     return opportunitiesdb;
