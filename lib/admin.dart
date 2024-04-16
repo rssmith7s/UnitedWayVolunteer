@@ -5,6 +5,7 @@ import 'designs.dart';
 import 'opportunity.dart';
 import 'login.dart';
 import 'vollist.dart';
+import 'specific_volist.dart';
 import 'supabase_functions.dart';
 
 class AdminPage extends StatefulWidget {
@@ -32,13 +33,32 @@ class _AdminPageState extends State<AdminPage> {
     
     return opportunitiesdb;
   }
+
+   Future<List<Volunteer>> viewSpecificVolunteerList(String eventId) async {
+    List<Volunteer> volunteersdb = [];
+    List tableData = await fetchSpecific('user_table', 'event_id', eventId);
+    for (var i = 0; i < tableData.length; i++) {
+    Volunteer volunteerdb = Volunteer(
+      first_name: tableData[i]['first_name'],
+      last_name: tableData[i]['last_name'],
+      phone: tableData[i]['phone'],
+      email: tableData[i]['email'],
+      category: tableData[i]['category'],
+      eventId: tableData[i]['event_id'],
+    );
+    volunteersdb.add(volunteerdb);
+    print(volunteerdb);
+    }
+    
+    return volunteersdb;
+  }
   
   void _acceptOpportunity(VolunteerOpportunityDatabase opportunity) {
     updateOpportunityStatus(opportunity.title);
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
   void _rejectOpportunity(VolunteerOpportunityDatabase opportunity) {
-
+    
     removeOpportunity(opportunity.title);
     
   }
@@ -56,9 +76,18 @@ class _AdminPageState extends State<AdminPage> {
       MaterialPageRoute(builder: (context) => VolunteerListPage()),
     );
   }
+
+  void _viewSpecificVolunteerList(String eventId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SpecificVolunteerListPage(eventId: eventId)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<List> opportunities = getAllOpportunities();
+    // Future<List> volunteers = viewSpecificVolunteerList();
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -150,7 +179,7 @@ class _AdminPageState extends State<AdminPage> {
                               style: TextStyle(color: textColor),),
                             subtitle: Text('Date: ${snapshot.data?[index].date}',
                               style: TextStyle(color: accentColor)),
-                            onTap: () => _viewVolunteerList(),
+                            onTap: () => _viewSpecificVolunteerList(snapshot.data?[index].eventId), //viewSpecificVolunteerList(snapshot.data?[index].eventId),
                           );
                         } else {
                           return SizedBox.shrink();

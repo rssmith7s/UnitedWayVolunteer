@@ -4,11 +4,15 @@ import 'supabase_functions.dart';
 import 'designs.dart';
 import 'opportunity.dart';
 
-class VolunteerListPage extends StatelessWidget {
+class SpecificVolunteerListPage extends StatelessWidget {
 
-  Future<List<Volunteer>> getAllVolunteers() async { //get specific volunteers? On the admin page when a specific event is clicked.
+  final String eventId;
+
+  SpecificVolunteerListPage({required this.eventId});
+
+  Future<List<Volunteer>> getAllVolunteers(String eventId) async { //get specific volunteers? On the admin page when a specific event is clicked.
     List<Volunteer> volunteersdb = [];
-    List tableData = await fetchVolunteers('user_table');
+    List tableData = await fetchSpecificVolunteers('user_table', eventId);
     for (var i = 0; i < tableData.length; i++) {
     Volunteer volunteerdb = Volunteer(
       first_name: tableData[i]['first_name'],
@@ -28,7 +32,7 @@ class VolunteerListPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    Future<List> volunteers = getAllVolunteers();
+    Future<List> volunteers = getAllVolunteers(eventId);
     var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     // Extract all volunteers from all opportunities

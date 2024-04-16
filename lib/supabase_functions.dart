@@ -44,6 +44,20 @@ fetchData(String table) async {
   return response;
 }
 
+Future<dynamic> fetchSpecificVolunteers(String table, String eventId) async {
+  final response = await Supabase.instance.client
+      .from(table)
+      .select('*')
+      .eq('event_id', eventId);
+
+  if (response != null) {
+      for (final row in response) {
+        print('Fetched row: $row');
+      }
+    }
+  return response;
+}
+
 fetchSpecific(String table, String row, String column) async {
   final response = await Supabase.instance.client
       .from(table)
