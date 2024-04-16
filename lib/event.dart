@@ -159,28 +159,3 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 }
-
-// DiagonalLinePainter class
-class DiagonalLinePainter extends CustomPainter {
-  final bool isBottomLeftAngle;
-
-  DiagonalLinePainter({this.isBottomLeftAngle = true});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = alternateColor
-      ..strokeWidth = 3.0;
-
-    if (isBottomLeftAngle) {
-      canvas.drawLine(Offset(0, 0), Offset(size.width, size.height), paint);
-    } else {
-      canvas.drawLine(Offset(size.width, 0), Offset(0, size.height), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
