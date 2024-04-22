@@ -138,7 +138,10 @@ Future<void> removeOpportunity(String title) async {
 // (used in event.dart) inserts volunteer into user_table
 Future<void> insertVolunteer(Volunteer volunteer) async {
   try {
-    final response = await Supabase.instance.client.from('user_table').insert({
+    final response = await Supabase.instance.client 
+    .from('user_table') 
+    .insert({ 
+    
       'first_name': volunteer.first_name,
       'last_name': volunteer.last_name,
       'email': volunteer.email,

@@ -11,11 +11,11 @@ class SpecificVolunteerListPage extends StatelessWidget {
   SpecificVolunteerListPage({required this.eventId});
 
   //displays all volunteers for a specific event
-  Future<List<Volunteer>> getAllVolunteers(String eventId) async { //get specific volunteers? On the admin page when a specific event is clicked.
+  Future<List<Volunteer>> getAllVolunteers(String eventId) async {
     List<Volunteer> volunteersdb = [];
-    List tableData = await fetchSpecificVolunteers('user_table', eventId);
+    List tableData = await fetchSpecificVolunteers('user_table', eventId); //fetches volunteers for a specific event
     for (var i = 0; i < tableData.length; i++) {
-    Volunteer volunteerdb = Volunteer(
+    Volunteer volunteerdb = Volunteer( //creates a new Volunteer object
       first_name: tableData[i]['first_name'],
       last_name: tableData[i]['last_name'],
       phone: tableData[i]['phone'],
@@ -23,7 +23,7 @@ class SpecificVolunteerListPage extends StatelessWidget {
       category: tableData[i]['category'],
       eventId: tableData[i]['event_id'],
     );
-    volunteersdb.add(volunteerdb);
+    volunteersdb.add(volunteerdb);  //adds the new volunteer to the list of volunteers
     print(volunteerdb);
     }
     

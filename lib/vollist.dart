@@ -9,9 +9,9 @@ class VolunteerListPage extends StatelessWidget {
   //displays all volunteers (master list)
   Future<List<Volunteer>> getAllVolunteers() async { 
     List<Volunteer> volunteersdb = [];
-    List tableData = await fetchVolunteers('user_table');
+    List tableData = await fetchVolunteers('user_table'); //fetches all volunteers
     for (var i = 0; i < tableData.length; i++) {
-    Volunteer volunteerdb = Volunteer(
+    Volunteer volunteerdb = Volunteer( //creates a new Volunteer object
       first_name: tableData[i]['first_name'],
       last_name: tableData[i]['last_name'],
       phone: tableData[i]['phone'],
@@ -19,7 +19,7 @@ class VolunteerListPage extends StatelessWidget {
       category: tableData[i]['category'],
       eventId: tableData[i]['event_id'],
     );
-    volunteersdb.add(volunteerdb);
+    volunteersdb.add(volunteerdb); // adds the new volunteer to the list of volunteers
     print(volunteerdb);
     }
     
