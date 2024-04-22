@@ -29,7 +29,7 @@ fetchData(String table) async {
     }
   return response;
 }
-
+// (used in volist.dart) fetches all volunteers for master list
  fetchVolunteers(String table) async {
   final response = await Supabase.instance.client
       .from(table)
@@ -43,7 +43,7 @@ fetchData(String table) async {
     }
   return response;
 }
-
+// (used in specific_volist.dart) fetches volunteers for a specific event
 Future<dynamic> fetchSpecificVolunteers(String table, String eventId) async {
   final response = await Supabase.instance.client
       .from(table)
@@ -57,6 +57,7 @@ Future<dynamic> fetchSpecificVolunteers(String table, String eventId) async {
     }
   return response;
 }
+
 
 fetchSpecific(String table, String row, String column) async {
   final response = await Supabase.instance.client
@@ -99,8 +100,6 @@ Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
       'description': opportunity.description,
     });
 
-
-
     if (response.error != null && response.error.message != null) {
       print('Error inserting opportunity: ${response.error.message}');
     } else if (response.error != null) {
@@ -108,7 +107,6 @@ Future<void> insertOpportunity(VolunteerOpportunity opportunity) async {
     } else {
       print('Opportunity inserted successfully');
     }
-
     
   } catch (error) {
     print('Error inserting opportunity(catch): $error');
@@ -137,6 +135,7 @@ Future<void> removeOpportunity(String title) async {
   }
 }
 
+// (used in event.dart) inserts volunteer into user_table
 Future<void> insertVolunteer(Volunteer volunteer) async {
   try {
     final response = await Supabase.instance.client.from('user_table').insert({

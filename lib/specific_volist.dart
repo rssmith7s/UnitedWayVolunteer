@@ -10,6 +10,7 @@ class SpecificVolunteerListPage extends StatelessWidget {
 
   SpecificVolunteerListPage({required this.eventId});
 
+  //displays all volunteers for a specific event
   Future<List<Volunteer>> getAllVolunteers(String eventId) async { //get specific volunteers? On the admin page when a specific event is clicked.
     List<Volunteer> volunteersdb = [];
     List tableData = await fetchSpecificVolunteers('user_table', eventId);

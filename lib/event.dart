@@ -39,7 +39,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       category: 'Volunteer',
       eventId: widget.opportunity.eventId,
     );
-
+    
+    //supabase_functions.dart
     insertVolunteer(newVolunteer);
 
     // Add the new volunteer to the opportunity's list of volunteers

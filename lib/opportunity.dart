@@ -81,21 +81,6 @@ class Volunteer {
   });
 }
 
-class VolunteerDatabase {
-  String first_name;
-  String last_name;
-  String email;
-  String phone;
-  
-
-  VolunteerDatabase({
-    required this.first_name,
-    required this.last_name,
-    required this.email,
-    required this.phone,
-  });
-}
-
 enum OpportunityStatus {
   pending,
   accepted,

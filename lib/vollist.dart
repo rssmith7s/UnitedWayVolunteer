@@ -6,7 +6,8 @@ import 'opportunity.dart';
 
 class VolunteerListPage extends StatelessWidget {
 
-  Future<List<Volunteer>> getAllVolunteers() async { //get specific volunteers? On the admin page when a specific event is clicked.
+  //displays all volunteers (master list)
+  Future<List<Volunteer>> getAllVolunteers() async { 
     List<Volunteer> volunteersdb = [];
     List tableData = await fetchVolunteers('user_table');
     for (var i = 0; i < tableData.length; i++) {
