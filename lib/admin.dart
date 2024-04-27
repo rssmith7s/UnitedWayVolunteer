@@ -67,6 +67,14 @@ class _AdminPageState extends State<AdminPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image.network(
+                'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png',
+                width: 100,
+                height: 80,
+              ),
+            ),
             ElevatedButton(
               onPressed: _viewVolunteerList,
               child: Text('View All Volunteers',
