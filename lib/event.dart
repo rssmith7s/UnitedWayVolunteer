@@ -1,7 +1,6 @@
 //event.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/supabase_functions.dart';
-import 'supabase_functions.dart';
 import 'opportunity.dart';
 import 'designs.dart';
 

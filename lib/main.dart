@@ -4,9 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'opportunity.dart';
 import 'landing.dart';
 import 'designs.dart';
-import 'admin.dart';
-import 'supabase_functions.dart';
-import 'vollist.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

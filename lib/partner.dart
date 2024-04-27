@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'opportunity.dart';
 import 'designs.dart';
 import 'supabase_functions.dart';
@@ -47,6 +46,7 @@ class _PartnerPageState extends State<PartnerPage> {
 
       var opportunities = Provider.of<OpportunityNotifier>(context, listen: false);
       opportunities.opportunities.add(opportunity);
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       opportunities.notifyListeners();
 
       titleController.clear();

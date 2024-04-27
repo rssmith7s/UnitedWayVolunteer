@@ -34,6 +34,7 @@ class _AdminPageState extends State<AdminPage> {
   
   void _acceptOpportunity(VolunteerOpportunityDatabase opportunity) {
     updateOpportunityStatus(opportunity.title);
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     Provider.of<OpportunityNotifier>(context, listen: false).notifyListeners();
   }
   void _rejectOpportunity(VolunteerOpportunityDatabase opportunity) {

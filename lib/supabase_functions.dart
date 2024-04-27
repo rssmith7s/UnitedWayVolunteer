@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'landing.dart';
-import 'designs.dart';
 import 'opportunity.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -22,10 +18,8 @@ import 'package:http/http.dart' as http;
 fetchData(String table) async {
   final response = await Supabase.instance.client.from(table).select('*');
 
-  if (response != null) {
-    for (final row in response) {
-      print('Fetched row: $row');
-    }
+  for (final row in response) {
+    print('Fetched row: $row');
   }
   return response;
 }
@@ -36,10 +30,8 @@ fetchVolunteers(String table) async {
       .select('*')
       .like('category', 'volunteer');
 
-  if (response != null) {
-    for (final row in response) {
-      print('Fetched row: $row');
-    }
+  for (final row in response) {
+    print('Fetched row: $row');
   }
   return response;
 }
@@ -50,10 +42,8 @@ fetchSpecific(String table, String row, String column) async {
       .select('*')
       .like(column, row); // (event_id, specific_id)
 
-  if (response != null) {
-    for (final row in response) {
-      print('Fetched row: $row');
-    }
+  for (final row in response) {
+    print('Fetched row: $row');
   }
   return response;
 }

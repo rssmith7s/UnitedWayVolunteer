@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'supabase_functions.dart';
 import 'opportunity.dart';
-import 'login.dart';
 import 'event.dart';
 import 'designs.dart';
-import 'admin.dart';
 
 class VolunteerPage extends StatefulWidget {
   @override

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'supabase_functions.dart';
 import 'designs.dart';
 import 'opportunity.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 
 class VolunteerListPage extends StatelessWidget {
 //   Future<List<Volunteer>> getAllVolunteers() async {
@@ -55,7 +54,7 @@ class VolunteerListPage extends StatelessWidget {
             phone: tableData[i]['phone'] ?? '',
             category: tableData[i]['category'] ?? '',
             eventId:
-                tableData[i]['event_id'].toString() ?? '', // Convert to string
+                tableData[i]['event_id'].toString(), // Convert to string
           );
           volunteersdb.add(volunteerdb);
         }
@@ -76,10 +75,8 @@ class VolunteerListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List> volunteers = getAllVolunteers();
-    var opportunities = Provider.of<OpportunityNotifier>(context).opportunities;
 
     // Extract all volunteers from all opportunities
-    var allVolunteers = volunteers;
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -88,7 +85,7 @@ class VolunteerListPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Volunteers:',
               style: TextStyle(
                   fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
@@ -127,7 +124,7 @@ class VolunteerListPage extends StatelessWidget {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     // While data is loading:
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                 },
               ),
