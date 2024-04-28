@@ -80,58 +80,168 @@ class VolunteerListPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Volunteers:',
-              style: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
-            ),
-            Expanded(
-              child: FutureBuilder<List>(
-                future: volunteers,
-                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        var volunteer = snapshot.data?[index];
-                        return ListTile(
-                          title: Text(
-                            '${volunteer.first_name} ${volunteer.last_name}',
-                            style: TextStyle(color: textColor),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Phone: ${volunteer.phone}',
-                                style: TextStyle(color: accentColor),
-                              ),
-                              Text(
-                                'Email: ${volunteer.email}',
-                                style: TextStyle(color: accentColor),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    // While data is loading:
-                    return const CircularProgressIndicator();
-                  }
-                },
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Image.network(
+                'https://unitedwayofsemo.org/wp-content/uploads/2021/04/United-Way-Logo-White.png',
+                width: 100,
+                height: 80,
               ),
             ),
-          ],
-        ),
+          ),
+          // Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   child: CustomPaint(
+          //     size: Size(40, 40),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: false),
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 0,
+          //   right: 0,
+          //   child: CustomPaint(
+          //     size: Size(40, 40),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: true),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   child: CustomPaint(
+          //     size: Size(40, 40),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: true),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   right: 0,
+          //   child: CustomPaint(
+          //     size: Size(40, 40),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: false),
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   child: CustomPaint(
+          //     size: Size(20, 20),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: false),
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 0,
+          //   right: 0,
+          //   child: CustomPaint(
+          //     size: Size(20, 20),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: true),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   child: CustomPaint(
+          //     size: Size(20, 20),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: true),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   right: 0,
+          //   child: CustomPaint(
+          //     size: Size(20, 20),
+          //     painter: DiagonalLinePainter(isBottomLeftAngle: false),
+          //   ),
+          // ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 100.0, 16.0, 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Volunteers:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: FutureBuilder<List>(
+                    future: volunteers,
+                    builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            var volunteer = snapshot.data?[index];
+                            return ListTile(
+                              title: Text(
+                                '${volunteer.first_name} ${volunteer.last_name}',
+                                style: TextStyle(color: textColor),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Phone: ${volunteer.phone}',
+                                    style: TextStyle(color: accentColor),
+                                  ),
+                                  Text(
+                                    'Email: ${volunteer.email}',
+                                    style: TextStyle(color: accentColor),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        // While data is loading:
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
+  }
+}
+
+class DiagonalLinePainter extends CustomPainter {
+  final bool isBottomLeftAngle;
+
+  DiagonalLinePainter({this.isBottomLeftAngle = true});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = alternateColor
+      ..strokeWidth = 3.0;
+
+    if (isBottomLeftAngle) {
+      canvas.drawLine(Offset(0, 0), Offset(size.width, size.height), paint);
+    } else {
+      canvas.drawLine(Offset(size.width, 0), Offset(0, size.height), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
